@@ -6,6 +6,7 @@ import random
 NUM_STATES=6
 NUM_ACTIONS=6
 NUM_EPISODES=5000
+Alpha = 0.2
 Gamma = 0.8
 TERMINAL_STATE=5
 
@@ -23,7 +24,7 @@ def getMaxQ(Q,next_state):
 
 def updateRule(state,action,Q,R):
 	next_state=action
-	q = R[state,action] + (Gamma * getMaxQ(Q,next_state))
+	q = ((1-Alpha)*Q[state,action]) + Alpha*(R[state,action] + (Gamma * getMaxQ(Q,next_state)))
 	return q
 
 def main():
@@ -31,7 +32,13 @@ def main():
 	Q = np.zeros((NUM_STATES,NUM_ACTIONS))
 	
 	#define the reward function
-	R = np.matrix([[-1 ,-1, -1, -1, 0, -1],[-1, -1, -1, 0, -1, 100],[-1, -1, -1, 0, -1, -1],[-1 ,0, 0, -1, 0, -1],[0, -1, -1, 0, -1, 100],[-1, 0, -1, -1, 0, 100]])
+	R = np.matrix([
+		[-1 ,-1, -1, -1, 0, -1],
+		[-1, -1, -1, 0, -1, 100],
+		[-1, -1, -1, 0, -1, -1],
+		[-1 ,0, 0, -1, 0, -1],
+		[0, -1, -1, 0, -1, 100],
+		[-1, 0, -1, -1, 0, 100]])
 
 	#start episodes
 	for i in range(0,NUM_EPISODES):
