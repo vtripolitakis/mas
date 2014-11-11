@@ -6,11 +6,11 @@ import random
 
 NUM_STATES=6
 NUM_ACTIONS=6
-NUM_EPISODES=3000
+NUM_EPISODES=2500
 Alpha = 0.2
 Gamma = 0.8
-Delta_win = 0.001
-Delta_lose = 0.003
+Delta_win = 0.004
+Delta_lose = 0.01
 TERMINAL_STATE=5
 
 
@@ -55,7 +55,6 @@ def policyUpdate(state,Policy,MeanPolicy,Q,Delta_win,Delta_lose):
 	for i in range(0,NUM_ACTIONS):
 		Delta_plus = calculateDelta(state,Q,Policy,MeanPolicy,Delta_win,Delta_lose)
 		Delta_minus = ((-1.0)*Delta_plus)/((NUM_ACTIONS*1.0) - 1.0)
-		print Delta_plus
 		if (i==maxQValueIndex):
 			Policy[state,i] = min(1.0,Policy[state,i] + Delta_plus)
 		else:
